@@ -1,6 +1,11 @@
 spring:
   profiles:
     active: production
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
 ---
 server:
   port: 8083
@@ -8,9 +13,10 @@ spring:
   profiles: development, test
   data:
     mongodb:
-      database: orders
+      database: carts
 ---
 spring:
   profiles: production
-  application:
-    name: order-service
+  data:
+    mongodb:
+      database: carts

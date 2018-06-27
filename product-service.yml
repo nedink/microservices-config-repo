@@ -1,7 +1,11 @@
 spring:
   profiles:
     active: production
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
 ---
 
 spring:

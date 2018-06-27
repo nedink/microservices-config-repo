@@ -1,9 +1,11 @@
 spring:
-  application:
-    name: inventory-service
   profiles:
     active: development
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
 ---
 spring:
   profiles: development, test

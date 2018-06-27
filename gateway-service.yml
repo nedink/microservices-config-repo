@@ -2,6 +2,11 @@
 spring:
   profiles:
     active: development
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
 ---
 server:
   port: 8080
