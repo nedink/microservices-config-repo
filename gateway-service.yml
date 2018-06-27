@@ -1,0 +1,23 @@
+
+spring:
+  profiles:
+    active: development
+---
+server:
+  port: 8080
+spring:
+  profiles: development
+zuul:
+  routes:
+    cart-service: /cart/**
+    inventory-service: /inventory/**
+    product-service: /product/**
+  ignored-services: '*'
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://disovery-service:8761/eureka/

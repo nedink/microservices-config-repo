@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: production
+---
+server:
+  port: 8083
+spring:
+  profiles: development, test
+  data:
+    mongodb:
+      database: orders
+---
+spring:
+  profiles: production
+  application:
+    name: order-service
