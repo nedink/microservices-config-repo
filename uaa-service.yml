@@ -1,0 +1,44 @@
+spring:
+  profiles:
+    active: development
+---
+server:
+  servlet:
+    context-path: /uaa
+spring:
+  profiles: cloud
+  security:
+    user:
+      password: password
+---
+server:
+  port: 8181
+logging.level.org.springframework.security: DEBUG
+spring:
+  security:
+    user:
+      password: password
+  profiles: development
+  h2:
+    console:
+      path: /h2
+      enabled: true
+      settings:
+        web-allow-others: true
+  datasource:
+    url: jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=false;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    platform: h2
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
