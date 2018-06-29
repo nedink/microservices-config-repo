@@ -16,6 +16,18 @@ spring:
   security:
     basic:
       enabled: false
+security:
+  oauth2:
+    client:
+      client-id: app
+      client-secret: appclientsecret
+      access-token-uri: http://localhost:8080/uaa/oauth/token
+      user-authorization-uri: http://localhost:8080/uaa/oauth/authorize
+      scope: openid
+    resource:
+      user-info-uri: http://localhost:8080/uaa/userinfo
+      token-info-uri: http://localhost:8080/uaa/introspect
+      prefer-token-info: false
   profiles: development
 zuul:
   routes:
