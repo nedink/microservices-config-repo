@@ -14,6 +14,18 @@ spring:
   data:
     mongodb:
       database: carts
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8080/uaa/userinfo
+      token-info-uri: http://localhost:8080/uaa/introspect
+      prefer-token-info: false
+    client:
+      client-id: app
+      client-secret: clientsecret
+      access-token-uri: http://localhost:8080/uaa/oauth/token
+      user-authorization-uri: http://localhost:8080/uaa/oauth/authorize
+      scope: openid profile email
 ---
 spring:
   profiles: production
