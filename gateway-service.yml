@@ -25,10 +25,10 @@ security:
       prefer-token-info: false
     client:
       client-id: app
-      client-secret: clientsecret
+      client-secret: appclientsecret
       access-token-uri: http://localhost:8080/uaa/oauth/token
       user-authorization-uri: http://localhost:8080/uaa/oauth/authorize
-      scope: openid profile email
+      scope: openid profile password
 zuul:
   routes:
     cart-service: /cart/**
