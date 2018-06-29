@@ -9,7 +9,7 @@ management:
         include: hystrix.stream
 ---
 server:
-  port: 8080
+  port: 9999
 spring:
   profiles: development
 zuul:
