@@ -23,3 +23,15 @@ eureka:
   client:
     registerWithEureka: true
     serviceUrl: ${vcap.services.discovery.credentials.uri}/eureka/
+security:
+  oauth2:
+    client:
+      client-id: webstore
+      client-secret: webstoresecret
+      access-token-uri: ${vcap.services.uaa.credentials.url}/oauth/token
+      user-authorization-uri: ${vcap.services.uaa.credentials.url}/oauth/authorize
+      scope: openid,product.read,product.write,cart.read,cart.write
+    resource:
+      user-info-uri: ${vcap.services.uaa.credentials.url}/userinfo
+      token-info-uri: ${vcap.services.uaa.credentials.url}/introspect
+      prefer-token-info: true
