@@ -1,50 +1,40 @@
-spring:
-  profiles:
-    active: production
 management:
   endpoints:
     web:
       exposure:
-        include: hystrix.stream
----
-
+        include: ["hystrix.stream", "health", "info"]
 spring:
-  profiles: development, test, docker
-  h2:
-    console:
-      path: /h2
-      enabled: true
   datasource:
-    url: jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=false;DB_CLOSE_DELAY=-1
-    username: sa
-    password:
-    platform: h2
-    driver-class-name: org.h2.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    registerWithEureka: true
-    fetchRegistry: true
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-server:
-  port: 8081
-
----
-spring:
-  profiles: production
-  datasource:
-    url: ${cloud.services.mysql.connection.jdbcurl:jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=false;DB_CLOSE_DELAY=-1}
-    username: ${cloud.services.mysql.connection.username:sa}
-    password: ${cloud.services.mysql.connection.password:}
+    url: ${cloud.services.mysql.connection.jdbcurl}
+    username: ${cloud.services.mysql.connection.username}
+    password: ${cloud.services.mysql.connection.password}
     tomcat:
       test-on-borrow: true
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL55Dialect
+feign:
+  hystrix:
+    enabled: true
+security:
+  oauth2:
+    client:
+      client-id: webstore
+      client-secret: webstoresecret
+      access-token-uri: ${vcap.services.uaa.credentials.url}/oauth/token
+      user-authorization-uri: ${vcap.services.uaa.credentials.url}/oauth/authorize
+      scope: openid,product.read,product.write,cart.read,cart.write
+    resource:
+      user-info-uri: ${vcap.services.uaa.credentials.url}/userinfo
+      token-info-uri: ${vcap.services.uaa.credentials.url}/introspect
+      prefer-token-info: true
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 20
+  client:
+    registerWithEureka: true
+    serviceUrl: ${vcap.services.discovery.credentials.uri}/eureka/
