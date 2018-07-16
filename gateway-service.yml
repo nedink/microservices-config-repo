@@ -1,47 +1,45 @@
 # cf cs p-config-server standard config -c '{"git": { "uri": "https://github.com/apbg/microservices-config-repo" } }'
-spring:
-  profiles:
-    active: development
 management:
   endpoints:
     web:
       exposure:
-        include: hystrix.stream
----
-server:
-  port: 9999
-  error:
-    whitelabel:
-      enabled: false
-spring:
-  security:
-    basic:
-      enabled: false
-# security:
-#   oauth2:
-#     client:
-#       client-id: app
-#       client-secret: appclientsecret
-#       access-token-uri: http://localhost:8080/uaa/oauth/token
-#       user-authorization-uri: http://localhost:8080/uaa/oauth/authorize
-#       scope: openid
-#     resource:
-#       user-info-uri: http://localhost:8080/uaa/userinfo
-#       token-info-uri: http://localhost:8080/uaa/introspect
-#       prefer-token-info: false
-  profiles: development
+        include: ["hystrix.stream", "health", "info"]
+security:
+  oauth2:
+    client:
+      client-id: webstore
+      client-secret: webstoresecret
+      access-token-uri: ${vcap.services.uaa.credentials.url}/oauth/token
+      user-authorization-uri: ${vcap.services.uaa.credentials.url}/oauth/authorize
+      scope: openid,product.read,product.write,cart.read,cart.write
+    resource:
+      user-info-uri: ${vcap.services.uaa.credentials.url}/userinfo
+      token-info-uri: ${vcap.services.uaa.credentials.url}/introspect
+      prefer-token-info: false
 zuul:
   routes:
-    cart-service: /cart/**
-    inventory-service: /inventory/**
-    product-service: /product/**
-    uaa-service: /uaa/**
+    inventory-service:
+      path: /inventory/**
+      serviceId: inventory-service
+      sensitiveHeaders:
+      stripPrefix: true
+    cart-service:
+      path: /cart/**
+      serviceId: cart-service
+      sensitiveHeaders:
+      stripPrefix: true
+    product-service:
+      path: /product/**
+      serviceId: product-service
+      sensitiveHeaders:
+      stripPrefix: true
   ignored-services: '*'
 eureka:
   instance:
-    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 20
   client:
     registerWithEureka: true
-    fetchRegistry: true
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${vcap.services.discovery.credentials.uri}/eureka/
+    fetch-registry: true
