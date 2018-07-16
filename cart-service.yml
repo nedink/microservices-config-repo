@@ -29,8 +29,5 @@ eureka:
   client:
     registerWithEureka: true
     serviceUrl: ${vcap.services.discovery.credentials.uri}/eureka/
-feign:
-  hystrix:
-    enabled: true
 hystrix:
   shareSecurityContext: true
