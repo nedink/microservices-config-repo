@@ -1,34 +1,31 @@
-spring:
-  profiles:
-    active: production
 management:
   endpoints:
     web:
       exposure:
-        include: hystrix.stream
----
-server:
-  port: 8083
+        include: ["hystrix.stream", "health", "info", "env"]
 spring:
-  profiles: development, test
   data:
     mongodb:
       database: carts
+feign:
+  hystrix:
+    enabled: true
 security:
   oauth2:
-    resource:
-      user-info-uri: http://localhost:8080/uaa/userinfo
-      token-info-uri: http://localhost:8080/uaa/introspect
-      prefer-token-info: false
     client:
-      client-id: app
-      client-secret: appclientsecret
-      access-token-uri: http://localhost:8080/uaa/oauth/token
-      user-authorization-uri: http://localhost:8080/uaa/oauth/authorize
-      scope: openid profile email
----
-spring:
-  profiles: production
-  data:
-    mongodb:
-      database: carts
+      client-id: webstore
+      client-secret: webstoresecret
+      access-token-uri: ${vcap.services.uaa.credentials.url}/oauth/token
+      user-authorization-uri: ${vcap.services.uaa.credentials.url}/oauth/authorize
+      scope: openid,product.read,product.write,cart.read,cart.write
+    resource:
+      user-info-uri: ${vcap.services.uaa.credentials.url}/userinfo
+      token-info-uri: ${vcap.services.uaa.credentials.url}/introspect
+      prefer-token-info: false
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 20
+  client:
+    registerWithEureka: true
+    serviceUrl: ${vcap.services.discovery.credentials.uri}/eureka/
