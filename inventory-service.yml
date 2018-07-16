@@ -1,37 +1,25 @@
-spring:
-  profiles:
-    active: development
 management:
   endpoints:
     web:
       exposure:
-        include: hystrix.stream
----
+        include: ["hystrix.stream", "health", "info"]
 spring:
-  profiles: development, test
-  h2:
-    console:
-      path: /h2
-      enabled: true
   datasource:
-    url: jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=false;DB_CLOSE_DELAY=-1
-    username: sa
-    password:
-    platform: h2
-    driver-class-name: org.h2.Driver
+    url: ${cloud.services.mysql.connection.jdbcurl}
+    username: ${cloud.services.mysql.connection.username}
+    password: ${cloud.services.mysql.connection.password}
+    tomcat:
+      test-on-borrow: true
   jpa:
     hibernate:
       ddl-auto: create-drop
-    database-platform: org.hibernate.dialect.H2Dialect
-server:
-  port: 8082
-
----
-spring:
-  profiles: production
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-  jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL55Dialect
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 20
+  client:
+    registerWithEureka: true
+    serviceUrl: ${vcap.services.discovery.credentials.uri}/eureka/
