@@ -16,6 +16,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL55Dialect
+  sleuth:
+    sampler:
+      percentage: 1.0
+  zipkin:
+    baseUrl: ${vcap.services.zipkin.credentials.url}.apps.apbg.apcf.io/zipkin/
+sample:
+  zipkin: 
+    enabled: true
 feign:
   hystrix:
     enabled: true

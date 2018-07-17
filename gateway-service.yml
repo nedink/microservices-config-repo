@@ -48,3 +48,12 @@ feign:
     enabled: true
 hystrix:
   shareSecurityContext: true
+spring:
+  sleuth:
+    sampler:
+      percentage: 1.0
+  zipkin:
+    baseUrl: ${vcap.services.zipkin.credentials.url}.apps.apbg.apcf.io/zipkin/
+sample:
+  zipkin: 
+    enabled: true

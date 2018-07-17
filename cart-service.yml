@@ -7,6 +7,14 @@ spring:
   data:
     mongodb:
       database: carts
+  sleuth:
+    sampler:
+      percentage: 1.0
+  zipkin:
+    baseUrl: ${vcap.services.zipkin.credentials.url}.apps.apbg.apcf.io/zipkin/
+sample:
+  zipkin: 
+    enabled: true
 feign:
   hystrix:
     enabled: true
