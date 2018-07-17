@@ -18,7 +18,7 @@ spring:
         dialect: org.hibernate.dialect.MySQL55Dialect
   sleuth:
     sampler:
-      percentage: 1.0
+      probability: 1.0
   zipkin:
     baseUrl: ${vcap.services.zipkin.credentials.url}/
 sample:
