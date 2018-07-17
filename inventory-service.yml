@@ -20,7 +20,7 @@ spring:
     sampler:
       percentage: 1.0
   zipkin:
-    baseUrl: ${vcap.services.zipkin.credentials.url}/zipkin/
+    baseUrl: ${vcap.services.zipkin.credentials.url}/
 sample:
   zipkin: 
     enabled: true
