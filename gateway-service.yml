@@ -15,7 +15,7 @@ security:
     resource:
       user-info-uri: ${vcap.services.uaa.credentials.url}/userinfo
       token-info-uri: ${vcap.services.uaa.credentials.url}/introspect
-      prefer-token-info: true
+      prefer-token-info: false
 zuul:
   routes:
     inventory-service:
