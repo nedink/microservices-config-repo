@@ -57,3 +57,6 @@ spring:
 sample:
   zipkin: 
     enabled: true
+logging:
+  level:
+    org.springframework.security: DEBUG

@@ -43,3 +43,6 @@ security:
       user-info-uri: ${vcap.services.uaa.credentials.url}/userinfo
       token-info-uri: ${vcap.services.uaa.credentials.url}/introspect
       prefer-token-info: true
+logging:
+  level:
+    org.springframework.security: DEBUG
