@@ -17,8 +17,6 @@ sample:
     enabled: true
 feign:
   hystrix:
-    enabled: false
-  oauth2:
     enabled: true
 security:
   oauth2:
