@@ -18,6 +18,8 @@ sample:
 feign:
   hystrix:
     enabled: true
+  oauth:
+    enabled: true
 security:
   oauth2:
     client:
