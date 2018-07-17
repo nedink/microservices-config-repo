@@ -2,7 +2,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: ["hystrix.stream", "health", "info"]
+        include: ["hystrix.stream", "health", "info", "env"]
 spring:
   datasource:
     url: ${cloud.services.mysql.connection.jdbcurl}
@@ -20,7 +20,7 @@ spring:
     sampler:
       percentage: 1.0
   zipkin:
-    baseUrl: ${vcap.services.zipkin.credentials.url}.apps.apbg.apcf.io/zipkin/
+    baseUrl: ${vcap.services.zipkin.credentials.url}/zipkin/
 sample:
   zipkin: 
     enabled: true

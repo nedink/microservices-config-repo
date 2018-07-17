@@ -3,7 +3,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: ["hystrix.stream", "health", "info"]
+        include: ["hystrix.stream", "health", "info", "env"]
 security:
   oauth2:
     client:
@@ -53,7 +53,7 @@ spring:
     sampler:
       percentage: 1.0
   zipkin:
-    baseUrl: ${vcap.services.zipkin.credentials.url}.apps.apbg.apcf.io/zipkin/
+    baseUrl: ${vcap.services.zipkin.credentials.url}/zipkin/
 sample:
   zipkin: 
     enabled: true
