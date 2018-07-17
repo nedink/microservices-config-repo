@@ -26,7 +26,7 @@ sample:
     enabled: true
 feign:
   hystrix:
-    enabled: false
+    enabled: true
 security:
   oauth2:
     client:
@@ -48,11 +48,6 @@ eureka:
     serviceUrl: ${vcap.services.discovery.credentials.uri}/eureka/
 hystrix:
   shareSecurityContext: true
-  command:
-    default:
-      execution:
-        isolation:
-          strategy: SEMAPHORE
 logging:
   level:
     org.springframework.security: DEBUG
