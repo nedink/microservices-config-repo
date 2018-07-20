@@ -45,12 +45,12 @@ eureka: # (4)
     fetch-registry: true
 hystrix: # (5)
   shareSecurityContext: true
-spring:
+spring: # (6)
   sleuth:
     sampler:
       probability: 1.0
   zipkin:
     baseUrl: ${vcap.services.zipkin.credentials.url}/
-sample: # (6)
+sample:
   zipkin: 
     enabled: true
