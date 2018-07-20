@@ -1,4 +1,3 @@
-# cf cs p-config-server standard config -c '{"git": { "uri": "https://github.com/apbg/microservices-config-repo" } }'
 management: # (1)
   endpoints:
     web:
