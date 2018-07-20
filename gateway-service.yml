@@ -42,9 +42,9 @@ eureka: # (4)
     serviceUrl:
       defaultZone: ${vcap.services.discovery.credentials.uri}/eureka/
     fetch-registry: true
-hystrix: # (5)
+hystrix:
   shareSecurityContext: true
-spring: # (6)
+spring: # (5)
   sleuth:
     sampler:
       probability: 1.0
