@@ -1,10 +1,10 @@
 # cf cs p-config-server standard config -c '{"git": { "uri": "https://github.com/apbg/microservices-config-repo" } }'
-management:
+management: # (1)
   endpoints:
     web:
       exposure:
         include: ["hystrix.stream", "health", "info", "env"]
-security:
+security: # (2)
   oauth2:
     client:
       client-id: webstore
@@ -16,7 +16,7 @@ security:
       user-info-uri: ${vcap.services.uaa.credentials.url}/userinfo
       token-info-uri: ${vcap.services.uaa.credentials.url}/introspect
       prefer-token-info: false
-zuul:
+zuul: # (3)
   routes:
     inventory-service:
       path: /inventory/**
@@ -34,7 +34,7 @@ zuul:
       sensitiveHeaders:
       stripPrefix: true
   ignored-services: '*'
-eureka:
+eureka: # (4)
   instance:
     lease-renewal-interval-in-seconds: 10
     lease-expiration-duration-in-seconds: 20
@@ -43,10 +43,7 @@ eureka:
     serviceUrl:
       defaultZone: ${vcap.services.discovery.credentials.uri}/eureka/
     fetch-registry: true
-feign:
-  hystrix:
-    enabled: true
-hystrix:
+hystrix: # (5)
   shareSecurityContext: true
 spring:
   sleuth:
@@ -54,9 +51,6 @@ spring:
       probability: 1.0
   zipkin:
     baseUrl: ${vcap.services.zipkin.credentials.url}/
-sample:
+sample: # (6)
   zipkin: 
     enabled: true
-logging:
-  level:
-    org.springframework.security: DEBUG
