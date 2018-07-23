@@ -44,6 +44,15 @@ eureka: # (4)
     fetch-registry: true
 hystrix:
   shareSecurityContext: true
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 11000
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 10000
 spring: # (5)
   sleuth:
     sampler:
