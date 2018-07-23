@@ -45,6 +45,9 @@ eureka: # (4)
 hystrix:
   shareSecurityContext: true
 spring: # (5)
+  cloud:
+    services:
+      registrationMethod: direct
   sleuth:
     sampler:
       probability: 1.0
