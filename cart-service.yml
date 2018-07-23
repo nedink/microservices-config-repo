@@ -6,7 +6,8 @@ management:
 spring:
   cloud:
     services:
-      registrationMethod: direct
+      #registrationMethod: direct
+      registrationMethod: route
   data:
     mongodb:
       database: carts
