@@ -6,7 +6,8 @@ management:
 spring:
   cloud:
     services:
-      registrationMethod: direct
+      #registrationMethod: direct
+      registrationMethod: route
   datasource:
     url: ${cloud.services.mysql.connection.jdbcurl}
     username: ${cloud.services.mysql.connection.username}
