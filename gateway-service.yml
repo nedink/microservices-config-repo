@@ -47,7 +47,8 @@ hystrix:
 spring: # (5)
   cloud:
     services:
-      registrationMethod: direct
+      #registrationMethod: direct
+      registrationMethod: route
   sleuth:
     sampler:
       probability: 1.0
