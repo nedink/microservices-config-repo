@@ -6,8 +6,8 @@ management: # (1)
 security: # (2)
   oauth2:
     client:
-      client-id: webstore
-      client-secret: webstoresecret
+      client-id: ${vcap.services.uaa.credentials.client.id}
+      client-secret: ${vcap.services.uaa.credentials.client.secret}
       access-token-uri: ${vcap.services.uaa.credentials.url}/oauth/token
       user-authorization-uri: ${vcap.services.uaa.credentials.url}/oauth/authorize
       scope: openid,product.read,product.write,cart.read,cart.write
@@ -47,7 +47,6 @@ hystrix:
 spring: # (5)
   cloud:
     services:
-      #registrationMethod: direct
       registrationMethod: route
   sleuth:
     sampler:
