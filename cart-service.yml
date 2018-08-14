@@ -1,27 +1,84 @@
-management:
-  endpoints:
-    web:
-      exposure:
-        include: ["hystrix.stream", "health", "info", "env"]
+# ---
+spring.profiles: default
+spring.profiles.include:
+  - nohystrix
+  - nozipkin
+  - basic
+---
+spring.profiles: basic
+spring.profiles.include:
+  - actuator
 spring:
-  cloud:
-    services:
-      #registrationMethod: direct
-      registrationMethod: route
   data:
     mongodb:
       database: carts
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 20
+  client:
+    registerWithEureka: true
+    serviceUrl: ${vcap.services.discovery.credentials.uri}/eureka/
+---
+spring.profiles: nohystrix
+spring:
+  autoconfigure:
+    exclude: "org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration"
+  cloud:
+    circuit:
+      breaker:
+        enabled: false
+    bootstrap:
+      enabled: false
+  rabbitmq:
+    listener:
+      simple:
+        auto-startup: false
   sleuth:
-    sampler:
-      probability: 1.0
-  zipkin:
-    baseUrl: ${vcap.services.zipkin.credentials.url}/
-sample:
-  zipkin: 
-    enabled: true
+    hystrix:
+      strategy:
+        enabled: false
+management:
+  health:
+    rabbit:
+      enabled: false
+  endpoint:
+    hystrix:
+      stream:
+        enabled: false
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          semaphore:
+            maxConcurrentRequests: 100000
+        timeout:
+          enabled: false
+      circuitBreaker.enabled: false
+      fallback.enabled: false
+  metrics:
+    enabled: false
+  stream:
+    queue:
+      enabled: false
 feign:
   hystrix:
-    enabled: true
+    enabled: false
+---
+spring.profiles: nozipkin
+spring:
+  sleuth:
+    enabled: false
+  zipkin:
+    enabled: false
+---
+spring.profiles: security
+spring:
+  profiles:
+    include:
+      - basic
 security:
   oauth2:
     client:
@@ -34,15 +91,42 @@ security:
       user-info-uri: ${vcap.services.uaa.credentials.url}/userinfo
       token-info-uri: ${vcap.services.uaa.credentials.url}/introspect
       prefer-token-info: false
-eureka:
-  instance:
-    lease-renewal-interval-in-seconds: 10
-    lease-expiration-duration-in-seconds: 20
-  client:
-    registerWithEureka: true
-    serviceUrl: ${vcap.services.discovery.credentials.uri}/eureka/
-hystrix:
-  shareSecurityContext: true
 logging:
   level:
     org.springframework.security: DEBUG
+---
+spring.profiles: zipkin
+spring:
+  profiles:
+    include:
+      - basic
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    baseUrl: ${vcap.services.zipkin.credentials.url}/
+sample:
+  zipkin:
+    enabled: true
+---
+spring.profiles: actuator
+spring:
+  profiles:
+    include:
+      - basic
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+---
+spring.profiles: hystrix
+spring:
+  profiles:
+    include:
+      - basic
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  shareSecurityContext: true
