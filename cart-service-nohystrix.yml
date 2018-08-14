@@ -1,4 +1,0 @@
-hystrix:
-  stream:
-    queue:
-      enabled: false
