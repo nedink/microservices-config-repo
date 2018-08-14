@@ -1,9 +1,4 @@
 hystrix:
-  metrics:
-    enabled: false
   stream:
     queue:
       enabled: false
-# feign:
-#   hystrix:
-#     enabled: false
