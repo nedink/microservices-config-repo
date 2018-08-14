@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    include:
+      - basic
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  shareSecurityContext: true

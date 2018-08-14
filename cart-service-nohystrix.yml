@@ -1,0 +1,45 @@
+spring:
+  autoconfigure:
+    exclude: "org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration"
+  cloud:
+    circuit:
+      breaker:
+        enabled: false
+    bootstrap:
+      enabled: false
+  rabbitmq:
+    listener:
+      simple:
+        auto-startup: false
+  sleuth:
+    hystrix:
+      strategy:
+        enabled: false
+management:
+  health:
+    rabbit:
+      enabled: false
+  endpoint:
+    hystrix:
+      stream:
+        enabled: false
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          semaphore:
+            maxConcurrentRequests: 100000
+        timeout:
+          enabled: false
+      circuitBreaker.enabled: false
+      fallback.enabled: false
+  metrics:
+    enabled: false
+  stream:
+    queue:
+      enabled: false
+feign:
+  hystrix:
+    enabled: false

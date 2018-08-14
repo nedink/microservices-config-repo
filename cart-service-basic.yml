@@ -1,0 +1,16 @@
+spring:
+  data:
+    mongodb:
+      database: carts
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 20
+  client:
+    registerWithEureka: true
+    serviceUrl: ${vcap.services.discovery.credentials.uri}/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
