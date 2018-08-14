@@ -2,12 +2,8 @@ management:
   endpoints:
     web:
       exposure:
-        include: ["hystrix.stream", "health", "info", "env"]
+        include: "*"
 spring:
-  cloud:
-    services:
-      #registrationMethod: direct
-      registrationMethod: route
   datasource:
     url: ${cloud.services.mysql.connection.jdbcurl}
     username: ${cloud.services.mysql.connection.username}
@@ -20,14 +16,16 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL55Dialect
-  sleuth:
-    sampler:
-      probability: 1.0
-  zipkin:
-    baseUrl: ${vcap.services.zipkin.credentials.url}/
-sample:
-  zipkin: 
-    enabled: true
+---
+spring:
+  profiles: nohystrix
+hystrix:
+  stream:
+    queue:
+      enabled: false
+---
+spring:
+  profiles: discovery
 eureka:
   instance:
     lease-renewal-interval-in-seconds: 10
@@ -35,6 +33,17 @@ eureka:
   client:
     registerWithEureka: true
     serviceUrl: ${vcap.services.discovery.credentials.uri}/eureka/
+---
+spring:
+  profiles: hystrix
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  shareSecurityContext: true
+---
+spring:
+  profiles: security
 security:
   oauth2:
     client:
@@ -50,3 +59,14 @@ security:
 logging:
   level:
     org.springframework.security: DEBUG
+---
+spring:
+  profiles: zipkin
+  sleuth:	
+    sampler:	
+      probability: 1.0	
+  zipkin:	
+    baseUrl: ${vcap.services.zipkin.credentials.url}/	
+sample:	
+  zipkin:	
+    enabled: true
