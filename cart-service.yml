@@ -10,12 +10,10 @@ spring:
 ---
 spring:
   profiles: nohystrix
-  cloud:
-    circuit:
-      breaker:
-        enabled: false
 hystrix:
   stream:
+    metrics:
+    enabled: false
     queue:
       enabled: false
 ---
