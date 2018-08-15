@@ -55,7 +55,7 @@ hystrix:
 logging:
   level:
     org.springframework.security: DEBUG
-hystrix:
-  stream:
-    queue:
-      enabled: false
+#hystrix:
+#  stream:
+#    queue:
+#      enabled: false
