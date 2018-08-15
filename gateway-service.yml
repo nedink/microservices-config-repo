@@ -68,6 +68,8 @@ spring:
 hystrix:
   shareSecurityContext: true
 ---
+spring:
+  profiles: security
 security:
   oauth2:
     client:
