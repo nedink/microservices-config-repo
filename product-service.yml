@@ -52,6 +52,9 @@ eureka:
     serviceUrl: ${vcap.services.discovery.credentials.uri}/eureka/
 hystrix:
   shareSecurityContext: true
+  stream:
+    queue:
+      enabled: false
 logging:
   level:
     org.springframework.security: DEBUG
